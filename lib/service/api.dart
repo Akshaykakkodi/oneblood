@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 class Service{
 
-  static String baseUrl='http://192.168.1.6/oneblood_backend/';
+  static String baseUrl='http://192.168.29.175/oneblood_backend/';
    static Future<dynamic>sendData(String name,email,mobile_number,password,dob,location,blood_group,latitude,longitude,File? image)async{
 
 
@@ -347,10 +347,8 @@ class RecieveMessage{
 }
 class NoOfMessage{
   static Future<dynamic> getnum(String id) async {
-
     var response= await post(Uri.parse(Service.baseUrl+"get_chat_users_api.php"),body: {
       "id":id
-
     });
     if(response.statusCode==200){
       var data= jsonDecode(response.body);
@@ -366,6 +364,70 @@ class AlertNotification{
 
     var response= await post(Uri.parse(Service.baseUrl+"get_notification_alert_api.php"),body: {
       "id":id
+
+    });
+    if(response.statusCode==200){
+      var data= jsonDecode(response.body);
+      return data;
+    }else{
+      return "failed" ;
+    }
+
+  }
+}
+class FeedBack{
+  static Future<dynamic> insertFeedback(String id,feedback) async {
+
+    var response= await post(Uri.parse(Service.baseUrl+"insert_feedback_api.php"),body: {
+      "id":id,
+      "feedback":feedback
+
+    });
+    if(response.statusCode==200){
+
+
+      return true;
+    }else{
+      return "failed" ;
+    }
+
+  }
+}
+
+class GetNotification{
+ static Future getData() async {
+   var response= await get(Uri.parse(Service.baseUrl+"get_feedback_api.php"));
+   var data=jsonDecode(response.body);
+   if(response.statusCode==200){
+     return data;
+   }else {
+     throw Exception('Failed to load data');
+   }
+  }
+
+}
+class AlertMessage{
+  static Future<dynamic> getnum(String id) async {
+
+    var response= await post(Uri.parse(Service.baseUrl+"get_message_alert_api.php"),body: {
+      "id":id
+
+    });
+    if(response.statusCode==200){
+      var data= jsonDecode(response.body);
+      return data;
+    }else{
+      return "failed" ;
+    }
+
+  }
+}
+class UserChatAlert{
+  static Future<dynamic> getnum(String id,sId) async {
+
+    var response= await post(Uri.parse(Service.baseUrl+"user_message_alert_api.php"),body: {
+      "id":id,
+      "sId":sId
 
     });
     if(response.statusCode==200){

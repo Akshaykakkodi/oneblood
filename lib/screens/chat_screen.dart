@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -99,7 +98,7 @@ var log;
                         var date = timestampParts[0];
                         var time = timestampParts[1];
                         return Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding:  EdgeInsets.all(4.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [

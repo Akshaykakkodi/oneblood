@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:oneblood/screens/find_blood_bank.dart';
 import 'package:oneblood/screens/hospital_service_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../service/api.dart';
+import 'feedback_screen.dart';
 
 class BottomNav_home extends StatelessWidget {
   BottomNav_home({Key? key}) : super(key: key);
@@ -194,14 +194,19 @@ class BottomNav_home extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
                                   height: 150,
-                                  child: Card(
-                                    elevation: 5,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset('Assets/images/feedback.png'),
-                                        const Center(child: Text('Feedback')),
-                                      ],
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Feedback_screen(),));
+                                    },
+                                    child: Card(
+                                      elevation: 5,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset('Assets/images/feedback.png'),
+                                          const Center(child: Text('Feedback')),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

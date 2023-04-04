@@ -83,9 +83,6 @@ class _Registration_screenState extends State<Registration_screen> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,10 +91,6 @@ class _Registration_screenState extends State<Registration_screen> {
         key: fkey,
         child: ListView(
           children: [
-            // const Padding(
-            //   padding: EdgeInsets.all(10.0),
-            //   child: Center(child: Text('(Enter your details)')),
-            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(

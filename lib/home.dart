@@ -31,15 +31,82 @@ class _HomeState extends State<Home> {
   List screens = [BottomNav_home(), Donate_screen(), Request_screen(),Chat2()];
   Timer? _timer;
    late var id;
-    var notificationCount;
-    var newNotificationCount;
    Widget NotiIcon=Icon(Icons.notifications);
-
- var notificationNum;
+   Widget ChatIcon= Text("Chat",
+       style:
+       TextStyle(fontWeight: FontWeight.bold, color: Colors.white));
+   var notificationNum;
+ int count =0;
+ int Mcount=0;
+ var messageCount;
   getdata() async {
+    count++;
+    Mcount++;
     SharedPreferences spref=await SharedPreferences.getInstance();
     id=spref.getString('id');
      notificationNum=await AlertNotification.getnum(id);
+     messageCount=await AlertMessage.getnum(id);
+     print("m iss   $messageCount");
+     if(count==1){
+       spref.setInt("count" ,int.parse(notificationNum.toString()));
+
+     }else{
+      int? c =   spref.getInt("count");
+
+       if(notificationNum >c){
+         setState(() {
+           NotiIcon= Stack(
+             children:[
+               Padding(
+                 padding: const EdgeInsets.only(top: 5.0),
+                 child: Icon(Icons.notifications),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(left: 13.0,top: 1),
+                 child: Align(
+                   alignment: Alignment.topLeft,
+                   child: Icon(Icons.circle,size: 10,color: Colors.blue,),
+                 ),
+               )
+             ],
+
+           );
+         });
+         spref.setInt("count" ,int.parse(notificationNum.toString()));
+
+       }
+
+     }
+     if(Mcount==1){
+       spref.setInt("Mcount" ,int.parse(messageCount.toString()));
+     }else{
+       int? m= spref.getInt("Mcount");
+       if(messageCount >m){
+         setState(() {
+           ChatIcon= Stack(
+             children: [
+               Padding(
+                 padding: const EdgeInsets.all(15.0),
+                 child: Text("Chat",
+                     style:
+                     TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(right: 30.0,top: 12),
+                 child: Align(
+                   alignment: Alignment.topRight,
+                   child: Icon(Icons.circle,size: 10,),
+                 ),
+               )
+
+             ],
+           );
+         });
+         spref.setInt("Mcount" ,int.parse(messageCount.toString()));
+       }
+     }
+
+
 
     // spref.setString('notiNum', notificationNum.toString());
     // alertnum=spref.getString('notiNum');
@@ -47,45 +114,20 @@ class _HomeState extends State<Home> {
 
     return notificationNum;
   }
+
+  timer(){
+     Timer.periodic(Duration(seconds: 15), (timer){
+       getdata();
+       print(messageCount);
+
+    });
+  }
   @override
   void initState() {
+    getdata();
+    timer();
     super.initState();
 
-
-
-    // Refresh the screen every 5 seconds
-    _timer = Timer.periodic(Duration(seconds: 15), (timer) {
-      getdata().then((value){
-
-        if(notificationNum>notificationCount){
-          NotiIcon=  Stack(
-            children:[
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Icon(Icons.notifications),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 13.0,top: 1),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Icon(Icons.circle,size: 10,color: Colors.blue,),
-                ),
-              )
-            ],
-
-          );
-          setState(() {
-          notificationCount=notificationNum;
-          });
-        }else{
-          NotiIcon=Icon(Icons.notifications);
-        }
-      });
-
-
-
-    }
-    );
   }
 
   @override
@@ -134,7 +176,10 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.all(10.0),
             child: InkWell(
                 onTap: () {
-                  notificationCount=notificationNum;
+                  setState(() {
+                    NotiIcon=Icon(Icons.notifications);
+                  });
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -307,7 +352,7 @@ class _HomeState extends State<Home> {
           Icon(Icons.chat_outlined, color: Colors.white),
 
         ],
-        inactiveIcons: const [
+        inactiveIcons:  [
           Text(
             "Home",
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -318,9 +363,7 @@ class _HomeState extends State<Home> {
           Text("Request",
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-          Text("Chat",
-              style:
-              TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+          ChatIcon
         ],
         color: Colors.redAccent,
         circleColor: Colors.redAccent,
