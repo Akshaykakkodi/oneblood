@@ -56,13 +56,13 @@ class _HomeState extends State<Home> {
        if(notificationNum >c){
          setState(() {
            NotiIcon= Stack(
-             children:[
+             children:const [
                Padding(
-                 padding: const EdgeInsets.only(top: 5.0),
+                 padding: EdgeInsets.only(top: 5.0),
                  child: Icon(Icons.notifications),
                ),
                Padding(
-                 padding: const EdgeInsets.only(left: 13.0,top: 1),
+                 padding: EdgeInsets.only(left: 13.0,top: 1),
                  child: Align(
                    alignment: Alignment.topLeft,
                    child: Icon(Icons.circle,size: 10,color: Colors.blue,),
@@ -84,15 +84,15 @@ class _HomeState extends State<Home> {
        if(messageCount >m){
          setState(() {
            ChatIcon= Stack(
-             children: [
+             children: const [
                Padding(
-                 padding: const EdgeInsets.all(15.0),
+                 padding: EdgeInsets.all(15.0),
                  child: Text("Chat",
                      style:
                      TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                ),
                Padding(
-                 padding: const EdgeInsets.only(right: 30.0,top: 12),
+                 padding: EdgeInsets.only(right: 30.0,top: 12),
                  child: Align(
                    alignment: Alignment.topRight,
                    child: Icon(Icons.circle,size: 10,),
@@ -148,7 +148,7 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: indexnum == 0
             ? Row(
-                children:  [
+                children:  const [
                   Padding(
                     padding: EdgeInsets.only(right: 8.0),
                     child: Icon(Icons.person),
@@ -374,6 +374,14 @@ class _HomeState extends State<Home> {
           setState(() {
             indexnum = index;
           });
+
+          if(index == 3){
+            setState(() {
+              ChatIcon = Text("Chat",
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white));
+            });
+          }
         },
         shadowColor: Colors.deepPurple,
         circleShadowColor: Colors.deepPurple,

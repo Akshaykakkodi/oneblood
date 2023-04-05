@@ -22,8 +22,7 @@ class _Map_viewState extends State<Map_view>{
          Marker(markerId: MarkerId('my marker'),
            position: LatLng(currentPosition.latitude,currentPosition.longitude),
            infoWindow: InfoWindow(
-             title: 'marker',
-             snippet: 'This is my first marker',
+             title: 'your are here',
            )
          )
        );

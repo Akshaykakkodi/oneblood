@@ -24,8 +24,6 @@ class _Registration_screenState extends State<Registration_screen> {
   var selectedDob;
   var lat;
   var long;
-  String tatoo = "";
-  String vaccine = "";
   bool privacyPolicy = false;
   XFile? pickedFile;
   File? image;
@@ -50,8 +48,6 @@ class _Registration_screenState extends State<Registration_screen> {
     Placemark placemark = placemarks[0];
     lat=position.latitude.toString();
     long=position.longitude.toString();
-    print('lat osjnjh $long');
-    print(placemark.subLocality! + ", " + placemark.locality!);
     loc.text=placemark.subLocality! + ", " + placemark.locality!;
   }
 

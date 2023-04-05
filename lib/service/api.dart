@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 class Service{
 
-  static String baseUrl='http://192.168.29.175/oneblood_backend/';
+  static String baseUrl='http://192.168.68.190/oneblood_backend/';
    static Future<dynamic>sendData(String name,email,mobile_number,password,dob,location,blood_group,latitude,longitude,File? image)async{
 
 

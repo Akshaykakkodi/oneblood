@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:oneblood/service/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +14,7 @@ class Chat2 extends StatefulWidget {
 
 class _Chat2State extends State<Chat2> {
   late String id;
+  var c=0;
 
   void getId() async {
     SharedPreferences spref = await SharedPreferences.getInstance();
@@ -20,12 +23,21 @@ class _Chat2State extends State<Chat2> {
     });
     print(id);
   }
-  getAlert(String sId) async {
-    var messageCount= await UserChatAlert.getnum(id, sId);
-  }
+
+    getAlert(String sId) async {
+      c++;
+      if(c>1){
+        var messageCount= await UserChatAlert.getnum(id, sId);
+        print("count is sss $messageCount");
+      }
+
+    }
+
+
+
  Future getData() async {
     var data=await NoOfMessage.getnum(id);
-    print("asss ${data}");
+
     return data;
   }
   @override
@@ -33,7 +45,6 @@ class _Chat2State extends State<Chat2> {
     // TODO: implement initState
     super.initState();
     getId();
-
   }
   @override
   Widget build(BuildContext context) {
@@ -48,7 +59,11 @@ class _Chat2State extends State<Chat2> {
             return  ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context,index) {
+
+
                   getAlert(snapshot.data[index]['login_id']);
+
+
                   return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
