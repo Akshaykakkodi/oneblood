@@ -35,7 +35,7 @@ class _Accept_requestState extends State<Accept_request> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Confirm Donation',style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.bold),),
+        title: const Text('Confirm Donation',style: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.bold),),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +46,7 @@ class _Accept_requestState extends State<Accept_request> {
             future: getData(),
             builder: (context,snapshot) {
               if(snapshot.connectionState==ConnectionState.waiting){
-                return Center(child: CircularProgressIndicator(),);
+                return const Center(child: CircularProgressIndicator(),);
               }
               else{
                 return Padding(
@@ -61,7 +61,7 @@ class _Accept_requestState extends State<Accept_request> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: [
+                            children: const [
 
                               Text('Requested by:',style: TextStyle(fontSize: 16,),),
                               Text('Requested blood group:',style: TextStyle(fontSize: 16,),),
@@ -152,9 +152,9 @@ class _Accept_requestState extends State<Accept_request> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0,bottom: 8),
+                padding: EdgeInsets.only(top: 8.0,bottom: 8),
                 child: Text('*Do not Donate blood if you have',style: TextStyle(color: Colors.redAccent),)
                 ,
               ),
@@ -187,13 +187,13 @@ class _Accept_requestState extends State<Accept_request> {
                    }
 
 
-                }, child: Text('Accept Request',style: TextStyle(color: Colors.white),)),
+                }, child: const Text('Accept Request',style: TextStyle(color: Colors.white),)),
 
                 MaterialButton(
                     color: Colors.deepPurple,onPressed: () {
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Home(),), (route) => false);
 
-                }, child: Text('Cancel',style: TextStyle(color: Colors.white),)),
+                }, child: const Text('Cancel',style: TextStyle(color: Colors.white),)),
               ],
             ),
           )

@@ -30,76 +30,80 @@ Future  getData() async {
         title: Text('Feedback',style: TextStyle(color: Colors.red),),
         centerTitle: true,
       ),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            height: 350,
-            child: FutureBuilder(
-              future: getData(),
-              builder: (context,snapshot) {
-                if(snapshot.connectionState==ConnectionState.waiting){
-                  return Center(child: CircularProgressIndicator());
-                }
-                if(snapshot.hasData && snapshot.data!=null){
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          elevation: 10,
-                          color: Colors.redAccent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
+          Expanded(
+            child: SizedBox(
+              height: 400,
+              child: FutureBuilder(
+                future: getData(),
+                builder: (context,snapshot) {
+                  if(snapshot.connectionState==ConnectionState.waiting){
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if(snapshot.hasData && snapshot.data!=null){
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 10,
+                            color: Colors.redAccent,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
 
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ExtendedImage.network(
-                                      Service.baseUrl+snapshot.data[index]['image'],
-                                      height: 150,
-                                      shape: BoxShape.rectangle,
-                                      fit: BoxFit.fill,
+                                width: 200,
 
-                                      cache: true,
-                                      border: Border.all(color: Colors.red, width: 1.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ExtendedImage.network(
+                                        Service.baseUrl+snapshot.data[index]['image'],
+                                        height: 150,
+                                        shape: BoxShape.rectangle,
+                                        fit: BoxFit.fill,
 
-                                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                                      //cancelToken: cancellationToken,
+                                        cache: true,
+                                        border: Border.all(color: Colors.red, width: 1.0),
+
+                                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                        //cancelToken: cancellationToken,
+                                      ),
                                     ),
-                                  ),
+                                    Text(snapshot.data[index]["name"],style: TextStyle(color: Colors.white,fontSize: 18),),
 
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                    snapshot.data[index]['feedback'],maxLines: 7,style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 18),),
-                                  )
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                      snapshot.data[index]['feedback'],maxLines: 7,style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 14),),
+                                    )
+                                  ],
+                                ),
                               ),
-                              // height: 300,
-                              width: 200,
                             ),
                           ),
-                        ),
-                      );
-                    },);
-                }else{
-                  return Text("No data");
+                        );
+                      },);
+                  }else{
+                    return Text("No data");
+                  }
+
                 }
+              ),
 
-              }
             ),
-
           ),
           SizedBox(
             height: 50,
           ),
           SizedBox(
-            height: 200,
+            height: 150,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: TextFormField(

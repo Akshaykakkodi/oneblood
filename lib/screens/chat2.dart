@@ -14,10 +14,10 @@ class Chat2 extends StatefulWidget {
 
 class _Chat2State extends State<Chat2> {
   late String id;
-  var c=0;
+  late SharedPreferences spref;
 
   void getId() async {
-    SharedPreferences spref = await SharedPreferences.getInstance();
+     spref = await SharedPreferences.getInstance();
     setState(() {
       id = spref.getString('id') ?? '';
     });
@@ -25,11 +25,8 @@ class _Chat2State extends State<Chat2> {
   }
 
     getAlert(String sId) async {
-      c++;
-      if(c>1){
-        var messageCount= await UserChatAlert.getnum(id, sId);
-        print("count is sss $messageCount");
-      }
+      var messageCount= await UserChatAlert.getnum(id, sId);
+
 
     }
 
@@ -37,6 +34,7 @@ class _Chat2State extends State<Chat2> {
 
  Future getData() async {
     var data=await NoOfMessage.getnum(id);
+    getAlert(id);
 
     return data;
   }
@@ -64,20 +62,24 @@ class _Chat2State extends State<Chat2> {
                   getAlert(snapshot.data[index]['login_id']);
 
 
-                  return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Chat_Screen(reciever_id:snapshot.data[index]['login_id'],sender_id:id,user_name:snapshot.data[index]['name']),));
-                        },
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 25,
-                            foregroundImage: NetworkImage(Service.baseUrl+snapshot.data[index]['image'],) ,
-                          ),
-                          title: Text(snapshot.data[index]['name']),
-                        ),
-                      )
+                  return Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Chat_Screen(reciever_id:snapshot.data[index]['login_id'],sender_id:id,user_name:snapshot.data[index]['name']),));
+                            },
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25,
+                                foregroundImage: NetworkImage(Service.baseUrl+snapshot.data[index]['image'],) ,
+                              ),
+                              title: Text(snapshot.data[index]['name']),
+                            ),
+                          )
+                      ),
+                    ],
                   );
                 }
             );

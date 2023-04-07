@@ -5,7 +5,8 @@ import 'package:http/http.dart';
 
 class Service{
 
-  static String baseUrl='http://192.168.68.190/oneblood_backend/';
+  static String baseUrl='http://192.168.29.176/oneblood_backend/';
+  static String imageBaseUrl='http://192.168.29.176/oneblood/images/';
    static Future<dynamic>sendData(String name,email,mobile_number,password,dob,location,blood_group,latitude,longitude,File? image)async{
 
 
@@ -439,3 +440,17 @@ class UserChatAlert{
 
   }
 }
+
+ class GetAds{
+  static Future getData() async {
+    var response= await  get(Uri.parse(Service.baseUrl+"get_ads_api.php"));
+    if(response.statusCode==200){
+      var data= jsonDecode(response.body);
+      return data;
+    }else{
+      return "failed";
+    }
+
+  }
+
+ }

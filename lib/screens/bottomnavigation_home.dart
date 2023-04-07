@@ -2,33 +2,51 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:oneblood/screens/find_blood_bank.dart';
 import 'package:oneblood/screens/hospital_service_screen.dart';
+import 'package:oneblood/screens/my_profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../service/api.dart';
 import 'feedback_screen.dart';
 
-class BottomNav_home extends StatelessWidget {
+class BottomNav_home extends StatefulWidget {
   BottomNav_home({Key? key}) : super(key: key);
-  final List<String> imgList = [
-    'https://www.woodlandshospital.in/images/campaign/large/hope-campaign.jpg',
-    'https://www.woodlandshospital.in/images/campaign/large/campaign5.jpg',
-    'https://cdn.apollohospitals.com/dev-apollohospitals/images/news/youNext.jpg',
-    'https://www.mangalahospital.in/wp-content/uploads/2017/11/banner.jpg',
-    'https://evokad.com/wp-content/uploads/2021/04/Healthcare-Marketing-Facebook-Ads.jpg',
-    'https://www.adgully.com/img/800/201712/religare-health-insurance_2.jpg'
-  ];
+
+  @override
+  State<BottomNav_home> createState() => _BottomNav_homeState();
+}
+
+class _BottomNav_homeState extends State<BottomNav_home> {
+
   final List<String> imgList2=[
     'https://brandongaille.com/wp-content/uploads/2013/10/39-Catchy-Blood-Drive-Campaign-Slogans.jpg',
     'https://ntrtrust.org/wp-content/uploads/2021/01/WhatsApp-Image-2021-01-02-at-11.33.38.jpeg'
   ];
+  List Adssss=[];
 
   var login_id;
+
+  var AdData;
+
+ Future getAd() async {
+    AdData= await GetAds.getData();
+    for(int i=0;i<AdData.length;i++){
+      Adssss.add("${Service.imageBaseUrl}${AdData[i]["image"]}");
+    }
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getAd();
+    super.initState();
+  }
+
   Future getUserData() async {
     SharedPreferences spref=await SharedPreferences.getInstance();
     login_id= spref.getString('id');
 
     print("login id $login_id");
    var details= await UserDetails.userData(login_id);
-   print(details);
+
    return details;
   }
 
@@ -55,44 +73,49 @@ class BottomNav_home extends StatelessWidget {
                         child: Container(
                           height: 100,
                           width: 300,
-                          child: Card(
-                            elevation: 5,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
-                                    Text(
-                                      snapshot.data['name'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                    Text(
-                                      'user',
-                                      style: TextStyle(color: Colors.grey),
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children:  [
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: Colors.redAccent,
-                                      child: Text(snapshot.data['blood_group'],
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    Text(
-                                      'Blood group',
-                                      style: TextStyle(color: Colors.grey),
-                                    )
-                                  ],
-                                )
-                              ],
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => My_profile_screen(),));
+                            },
+                            child: Card(
+                              elevation: 5,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children:  [
+                                      Text(
+                                        snapshot.data['name'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Text(
+                                        'user',
+                                        style: TextStyle(color: Colors.grey),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children:  [
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: Colors.redAccent,
+                                        child: Text(snapshot.data['blood_group'],
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      Text(
+                                        'Blood group',
+                                        style: TextStyle(color: Colors.grey),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -220,7 +243,7 @@ class BottomNav_home extends StatelessWidget {
                         child: SizedBox(
                           height: 150,
                           child: CarouselSlider(
-                              items: imgList
+                              items: Adssss
                                   .map((item) =>
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),

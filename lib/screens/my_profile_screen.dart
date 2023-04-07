@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:oneblood/screens/edit_profile_screen.dart';
 import 'package:oneblood/service/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +38,14 @@ var data;
    available_to_donate==false?status='no':status='yes';
    var result=await UpdateAvailablity.update(login_id, status);
 
+  }
+  shareMessage() async {
+    String message = "Download oneblood app , Donate blood and save life, download the app here playstore/oneblood";
+    await FlutterShare.share(
+        title: 'Share via WhatsApp',
+        text: message,
+        chooserTitle: 'Share via'
+    );
   }
 
   @override
@@ -169,12 +178,17 @@ var data;
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    tileColor: Colors.blueGrey[50],
-                    title: const Text('Invite a friend'),
-                    leading: const Icon(Icons.insert_invitation,color: Colors.red,),
+                  child: InkWell(
+                    onTap: () {
+                      shareMessage();
+                    },
+                    child: ListTile(
+                      tileColor: Colors.blueGrey[50],
+                      title: const Text('Invite a friend'),
+                      leading: const Icon(Icons.insert_invitation,color: Colors.red,),
 
 
+                    ),
                   ),
                 ),
                 Padding(

@@ -33,7 +33,8 @@ var log;
     // Refresh the screen every 5 seconds
     _timer = Timer.periodic(Duration(seconds: 30), (timer) {
       setState(() {});
-    });
+    }
+    );
   }
 
   @override
@@ -64,7 +65,7 @@ var log;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.redAccent,
 
         title: InkWell(
           onTap: () {
@@ -75,6 +76,7 @@ var log;
 
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
 
         children: [
@@ -162,7 +164,7 @@ var log;
                           Fluttertoast.showToast(msg: 'failed to send');
                         }
                         },
-                        child: Icon(Icons.send)),
+                        child: Icon(Icons.send,color: Colors.red,)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
               ),

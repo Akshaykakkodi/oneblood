@@ -91,14 +91,15 @@ class _Search_screenState extends State<Search_screen> {
                               ),
                               subtitle: Row(
                                 children: [
-                                  Text(
-                                    snapshot.data[index]['blood_group'],
-                                    style: TextStyle(color: Colors.white),
-                                  ),
                                   Icon(
                                     Icons.water_drop,
                                     color: Colors.red,
                                   ),
+                                  Text(
+                                    snapshot.data[index]['blood_group'],
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+
                                 ],
                               ),
                             ),
