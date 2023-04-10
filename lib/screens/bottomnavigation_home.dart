@@ -37,6 +37,9 @@ class _BottomNav_homeState extends State<BottomNav_home> {
   void initState() {
     // TODO: implement initState
     getAd();
+    setState(() {
+
+    });
     super.initState();
   }
 

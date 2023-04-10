@@ -106,12 +106,6 @@ class _HomeState extends State<Home> {
        }
      }
 
-
-
-    // spref.setString('notiNum', notificationNum.toString());
-    // alertnum=spref.getString('notiNum');
-
-
     return notificationNum;
   }
 

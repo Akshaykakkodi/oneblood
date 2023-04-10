@@ -23,6 +23,7 @@ class _Chat_ScreenState extends State<Chat_Screen> {
   var receiverId;
   var senderId;
   TextEditingController message=TextEditingController();
+  var fkey= GlobalKey<FormState>();
 var data;
 var log;
   Timer? _timer;
@@ -75,103 +76,114 @@ var log;
         centerTitle: true,
 
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Form(
+        key: fkey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
 
-        children: [
-          Expanded(
+          children: [
+            Expanded(
 
-            child: SizedBox(
+              child: SizedBox(
 
-              child: FutureBuilder(
-                future: getdata(),
-                builder: (context,snapshot) {
-                  if(snapshot.connectionState==ConnectionState.waiting){
-                    return Center(child: CircularProgressIndicator(),);
-                  }
-                  if(snapshot.hasData){
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      reverse: true,
-                      itemBuilder: (context, index) {
-                        var timestampParts =
-                        snapshot.data[index]['time_stamp'].split(' ');
-                        var date = timestampParts[0];
-                        var time = timestampParts[1];
-                        return Padding(
-                          padding:  EdgeInsets.all(4.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.95,
-                                // color: Colors.teal,
-                                child: Column(
-                                  crossAxisAlignment:log==snapshot.data[index]['sender_id']?CrossAxisAlignment.end:CrossAxisAlignment.start,
-                                  children: [
-                                    Card(
+                child: FutureBuilder(
+                  future: getdata(),
+                  builder: (context,snapshot) {
+                    if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: CircularProgressIndicator(),);
+                    }
+                    if(snapshot.hasData){
+                      return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          var timestampParts =
+                          snapshot.data[index]['time_stamp'].split(' ');
+                          var date = timestampParts[0];
+                          var time = timestampParts[1];
+                          return Padding(
+                            padding:  EdgeInsets.all(4.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.95,
+                                  // color: Colors.teal,
+                                  child: Column(
+                                    crossAxisAlignment:log==snapshot.data[index]['sender_id']?CrossAxisAlignment.end:CrossAxisAlignment.start,
+                                    children: [
+                                      Card(
 
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(snapshot.data[index]['message'],style: TextStyle(fontSize: 16),),
-                                        )),
-                                    Column(
-                                      children: [
-                                        Text(time,style: TextStyle(color: Colors.grey,fontSize: 11),),
-                                        Text(date,style: TextStyle(color: Colors.grey,fontSize: 11),),
-                                      ],
-                                    ),
-                                  ],
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(snapshot.data[index]['message'],style: TextStyle(fontSize: 16),),
+                                          )),
+                                      Column(
+                                        children: [
+                                          Text(time,style: TextStyle(color: Colors.grey,fontSize: 11),),
+                                          Text(date,style: TextStyle(color: Colors.grey,fontSize: 11),),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },);
-                  }else{
-                    return Text('No messages');
+                              ],
+                            ),
+                          );
+                        },);
+                    }else{
+                      return Text('No messages');
+                    }
+
                   }
-
-                }
+                ),
               ),
             ),
-          ),
 
-          SizedBox(
+            SizedBox(
 
-            child:
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextFormField(
-                controller: message,
-                maxLines: 4,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(2),
-                    suffixIcon:
-                    InkWell(
-                        onTap: () async {
-                          DateTime time = DateTime.now();
-                          String stringTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(time);
-                        var res= await SendMessage.send(receiverId, senderId, message.text, stringTime);
-                        if(res=="success"){
-                          Fluttertoast.showToast(msg: 'send');
-                          message.clear();
-                          setState(() {
+              child:
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: message,
+                  validator:  (value) {
+                    if(value!.isEmpty){
+                      return "Enter a message";
+                    }
+                  },
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(2),
+                      suffixIcon:
+                      InkWell(
+                          onTap: () async {
+                            if(fkey.currentState!.validate()){
+                              DateTime time = DateTime.now();
+                              String stringTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(time);
+                              var res= await SendMessage.send(receiverId, senderId, message.text, stringTime);
+                              if(res=="success"){
+                                Fluttertoast.showToast(msg: 'send');
+                                message.clear();
+                                setState(() {
 
-                          });
-                        }else{
-                          Fluttertoast.showToast(msg: 'failed to send');
-                        }
-                        },
-                        child: Icon(Icons.send,color: Colors.red,)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
+                                });
+                              }else{
+                                Fluttertoast.showToast(msg: 'failed to send');
+                              }
+                            }
+
+                          },
+                          child: Icon(Icons.send,color: Colors.red,)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
 
+        ),
       ),
     );
   }
