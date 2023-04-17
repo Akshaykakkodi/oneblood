@@ -12,11 +12,15 @@ class Edit_profile_screen extends StatefulWidget {
 class _Edit_profile_screenState extends State<Edit_profile_screen> {
   var id;
 TextEditingController mobile= TextEditingController();
+TextEditingController password= TextEditingController();
+
 
  Future getData() async {
    SharedPreferences spref=await SharedPreferences.getInstance();
    id=spref.getString("id");
     var data=await UserDetails.userData(id);
+    var lData= await Password.getPassword(id);
+    password.text=lData["password"];
     mobile.text=data["mobile_no"];
     return data;
   }
@@ -52,6 +56,7 @@ TextEditingController mobile= TextEditingController();
                   padding: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 40, right: 40),
                   child: TextFormField(
+                    controller: password,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.blueGrey[50],
@@ -87,7 +92,15 @@ TextEditingController mobile= TextEditingController();
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FloatingActionButton(onPressed: () {
+                  child: FloatingActionButton(onPressed: () async {
+                    var data= await EditUser.edit(id.toString(),password.text, mobile.text);
+                    if(data=="success"){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Updated")));
+                      password.clear();
+                      mobile.clear();
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong")));
+                    }
 
                   },child: Text("update",style: TextStyle(color: Colors.white),),backgroundColor: Colors.redAccent,),
                 )

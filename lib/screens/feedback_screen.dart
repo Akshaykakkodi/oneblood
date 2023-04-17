@@ -27,7 +27,7 @@ Future  getData() async {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text('Feedback',style: TextStyle(color: Colors.red),),
+        title: const Text('Feedback',style: TextStyle(color: Colors.red),),
         centerTitle: true,
       ),
       body: Column(
@@ -40,9 +40,9 @@ Future  getData() async {
                 future: getData(),
                 builder: (context,snapshot) {
                   if(snapshot.connectionState==ConnectionState.waiting){
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
-                  if(snapshot.hasData && snapshot.data!=null){
+                  if(snapshot.hasData){
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data.length,
@@ -76,12 +76,12 @@ Future  getData() async {
                                         //cancelToken: cancellationToken,
                                       ),
                                     ),
-                                    Text(snapshot.data[index]["name"],style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    Text(snapshot.data[index]["name"],style: const TextStyle(color: Colors.white,fontSize: 18),),
 
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                      snapshot.data[index]['feedback'],maxLines: 7,style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 14),),
+                                      snapshot.data[index]['feedback'],maxLines: 7,style: const TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 14),),
                                     )
                                   ],
                                 ),
@@ -91,7 +91,7 @@ Future  getData() async {
                         );
                       },);
                   }else{
-                    return Text("No data");
+                    return const Text("No data");
                   }
 
                 }
@@ -99,7 +99,7 @@ Future  getData() async {
 
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           SizedBox(
@@ -121,9 +121,9 @@ Future  getData() async {
                      }
 
                       },
-                        child: Icon(Icons.send)),
+                        child: const Icon(Icons.send)),
                     hintText:"Enter your feed back",
-                    contentPadding: EdgeInsets.all(30),
+                    contentPadding: const EdgeInsets.all(30),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
               ),
             ),

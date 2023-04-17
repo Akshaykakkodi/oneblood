@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 
 class Service{
 
-  static String baseUrl='http://192.168.29.176/oneblood_backend/';
-  static String imageBaseUrl='http://192.168.29.176/oneblood/images/';
+  static String baseUrl='http://192.168.68.134/oneblood_backend/';
+  static String imageBaseUrl='http://192.168.68.134/oneblood/images/';
    static Future<dynamic>sendData(String name,email,mobile_number,password,dob,location,blood_group,latitude,longitude,File? image)async{
 
 
@@ -453,4 +453,33 @@ class UserChatAlert{
 
   }
 
+ }
+
+ class EditUser{
+  static Future<dynamic> edit(String id,password,mobile) async {
+    var response= await post(Uri.parse(Service.baseUrl+"edit_profile_api.php"),body: {
+      "id":id,
+      "password":password,
+      "mobile":mobile
+    });
+    if(response.statusCode==200){
+      var data=jsonDecode(response.body);
+      if(data['message']=="success"){
+        return "success";
+      }
+    }
+  }
+ }
+ class Password{
+   static Future<dynamic> getPassword(String id) async {
+     var response= await post(Uri.parse(Service.baseUrl+"get_password_api.php"),body: {
+       "id":id
+
+     });
+     if(response.statusCode==200){
+       var data=jsonDecode(response.body);
+
+       return data;
+     }
+   }
  }

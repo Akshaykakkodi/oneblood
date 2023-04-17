@@ -91,7 +91,7 @@ var log;
                   future: getdata(),
                   builder: (context,snapshot) {
                     if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator(),);
+                      return const Center(child: CircularProgressIndicator(),);
                     }
                     if(snapshot.hasData){
                       return ListView.builder(
@@ -103,11 +103,11 @@ var log;
                           var date = timestampParts[0];
                           var time = timestampParts[1];
                           return Padding(
-                            padding:  EdgeInsets.all(4.0),
+                            padding:  const EdgeInsets.all(4.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: MediaQuery.of(context).size.width * 0.95,
                                   // color: Colors.teal,
                                   child: Column(
@@ -121,8 +121,8 @@ var log;
                                           )),
                                       Column(
                                         children: [
-                                          Text(time,style: TextStyle(color: Colors.grey,fontSize: 11),),
-                                          Text(date,style: TextStyle(color: Colors.grey,fontSize: 11),),
+                                          Text(time,style: const TextStyle(color: Colors.grey,fontSize: 11),),
+                                          Text(date,style: const TextStyle(color: Colors.grey,fontSize: 11),),
                                         ],
                                       ),
                                     ],
@@ -133,7 +133,7 @@ var log;
                           );
                         },);
                     }else{
-                      return Text('No messages');
+                      return const Text('No messages');
                     }
 
                   }
@@ -155,7 +155,7 @@ var log;
                   },
                   maxLines: 4,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(2),
+                      contentPadding: const EdgeInsets.all(2),
                       suffixIcon:
                       InkWell(
                           onTap: () async {
@@ -175,7 +175,7 @@ var log;
                             }
 
                           },
-                          child: Icon(Icons.send,color: Colors.red,)),
+                          child: const Icon(Icons.send,color: Colors.red,)),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10))),
                 ),
