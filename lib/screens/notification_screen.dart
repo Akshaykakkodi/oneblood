@@ -25,13 +25,13 @@ class _Notification_screenState extends State<Notification_screen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        title: Text('Notifications',style: TextStyle(color: Colors.redAccent),),
+        title: const Text('Notifications',style: TextStyle(color: Colors.redAccent),),
       ),
       body: FutureBuilder(
         future: getData(),
         builder: (context,snapshot) {
           if(snapshot.connectionState==ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(),);
+            return const Center(child: CircularProgressIndicator(),);
           }
           if(snapshot.hasData){
             return ListView.builder(
@@ -44,19 +44,20 @@ class _Notification_screenState extends State<Notification_screen> {
                 return ListTile(
                   title: Text(snapshot.data[index]['title']),
                   subtitle: Text(snapshot.data[index]['body']),
-                  leading: Icon(Icons.notifications_active_outlined),
+                  leading: const Icon(Icons.notifications_active_outlined),
 
                   trailing: Column(
                     children: [
                       Text(date),
                       Text(time)
+
                     ],
                   ),
 
                 );
               },);
           }else{
-            return Text('No notifications');
+            return const Text('No notifications');
           }
 
         }

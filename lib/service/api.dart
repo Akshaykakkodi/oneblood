@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 
 class Service{
 
-  static String baseUrl='http://192.168.68.134/oneblood_backend/';
-  static String imageBaseUrl='http://192.168.68.134/oneblood/images/';
+  static String baseUrl='http://192.168.68.168/oneblood_backend/';
+  static String imageBaseUrl='http://192.168.68.168/oneblood/images/';
    static Future<dynamic>sendData(String name,email,mobile_number,password,dob,location,blood_group,latitude,longitude,File? image)async{
 
 
@@ -36,13 +36,8 @@ class Service{
       if(data["message"]=="failed"){
         return false;
       }
-
     }
-
    }
-
-
-
 }
 
 class Service2{

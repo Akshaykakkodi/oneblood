@@ -24,8 +24,8 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
   markComplete(id){
     showDialog(context: context, builder: (context) =>
         AlertDialog(
-          title: Text('Alert'),
-          content: Text('Are you sure to mark this request complete !!'),
+          title: const Text('Alert'),
+          content: const Text('Are you sure to mark this request complete !!'),
           actions: [
             FloatingActionButton(
               backgroundColor: Colors.blueGrey,
@@ -49,7 +49,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
         future: getData(),
         builder: (context,snapshot) {
           if(snapshot.connectionState==ConnectionState.waiting){
-          return Center( child: CircularProgressIndicator(),);
+          return const Center( child: CircularProgressIndicator(),);
     }
           if(snapshot.hasData){
             return ListView.builder(
@@ -69,14 +69,14 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                               Row(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 8.0),
+                                    padding: const EdgeInsets.only(left: 8.0),
                                     child: CircleAvatar(
                                       radius: 16,
                                       backgroundColor: Colors.redAccent,
-                                      child: Text(snapshot.data[index]['blood_group'],style: TextStyle(color: Colors.white),),
+                                      child: Text(snapshot.data[index]['blood_group'],style: const TextStyle(color: Colors.white),),
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text('Request Blood',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold)),
                                   ),
@@ -92,7 +92,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                                       onTap: () {
 
                                       },
-                                      child: Text('Mark complete',style: TextStyle(color: Colors.white),)),
+                                      child: const Text('Mark complete',style: TextStyle(color: Colors.white),)),
                                   onPressed:  () {
                                     var id= snapshot.data[index]['request_id'];
                                     markComplete(id);
@@ -103,7 +103,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
 
                           Row(
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(left: 8.0),
                                 child: Text('Patient:',style: TextStyle(fontWeight: FontWeight.bold),),
                               ),
@@ -112,7 +112,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                           ),
                           Row(
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(left: 8.0),
                                 child: Text('Age:',style: TextStyle(fontWeight: FontWeight.bold),),
                               ),
@@ -128,7 +128,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                                 child: Row(
                                   children: [
                                     Text('Needs ${snapshot.data[index]['units']} units'),
-                                    Text('(Remaining 4)',style: TextStyle(color: Colors.red),)
+                                    const Text('(Remaining 4)',style: TextStyle(color: Colors.red),)
                                   ],
                                 ),
                               ),
@@ -140,7 +140,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                           ),
                           Row(
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(left: 8.0),
                                 child: Text('Status:',style: TextStyle(fontWeight: FontWeight.bold),),
                               ),
@@ -153,7 +153,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                             },
                             child: Row(
                               children: [
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.only(left: 8.0),
                                   child: Text('Donor:',style: TextStyle(fontWeight: FontWeight.bold),),
                                 ),
@@ -169,7 +169,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
                                 padding: const EdgeInsets.all( 10.0),
                                 child: Row(
                                   children:  [
-                                    Icon(Icons.location_on_outlined),
+                                    const Icon(Icons.location_on_outlined),
                                     Text(snapshot.data[index]['location'])
                                   ],
                                 ),
@@ -191,7 +191,7 @@ class _My_accepted_requestsState extends State<My_accepted_requests> {
               },);
           }
           else{
-            return Center(child:Text('No data'),);
+            return const Center(child:Text('No data'),);
           }
         }
     );

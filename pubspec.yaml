@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   circle_nav_bar: ^2.0.1+1
   carousel_slider: ^4.2.1
-  webview_flutter: ^4.0.5
   url_launcher: ^6.1.10
   google_maps_flutter: ^2.2.4
   location: ^4.4.0
@@ -45,7 +44,6 @@ dependencies:
   geocoding: ^2.0.5
   http: ^0.13.5
   intl: ^0.18.0
-  toast: ^0.3.0
   fluttertoast: ^8.2.1
   flutter_easyloading: ^3.0.5
   image_picker: ^0.8.7

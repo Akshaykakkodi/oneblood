@@ -41,9 +41,33 @@ class _Registration_screenState extends State<Registration_screen> {
       image=File(pickedFile!.path);
     });
   }
+  // bool serviceEnabled=false;
   
  Future getLocation() async {
-    Position position=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+   bool serviceEnabled;
+   LocationPermission permission;
+
+   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+   if (!serviceEnabled) {
+
+     await Geolocator.openLocationSettings();
+     return Future.error('Location services are disabled.');
+   }
+   permission = await Geolocator.checkPermission();
+   if (permission == LocationPermission.denied) {
+     permission = await Geolocator.requestPermission();
+     if (permission == LocationPermission.denied) {
+
+       return Future.error('Location permissions are denied');
+     }
+   }
+   if (permission == LocationPermission.deniedForever) {
+
+     return Future.error(
+         'Location permissions are permanently denied, we cannot request permissions.');
+   }
+
+   Position position =  await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark placemark = placemarks[0];
     lat=position.latitude.toString();
@@ -255,12 +279,8 @@ class _Registration_screenState extends State<Registration_screen> {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10)))),
                 items: const [
-                  DropdownMenuItem(
-                      value: 'Select', child: Text('Select blood group')),
-                  DropdownMenuItem(
-                    value: 'A+',
-                    child: Text('A+'),
-                  ),
+                  DropdownMenuItem(value: 'Select', child: Text('Select blood group')),
+                  DropdownMenuItem(value: 'A+',child: Text('A+'),),
                   DropdownMenuItem(value: 'O+', child: Text('O+')),
                   DropdownMenuItem(value: 'B+', child: Text('B+')),
                   DropdownMenuItem(value: 'AB+', child: Text('AB+')),
@@ -305,8 +325,6 @@ class _Registration_screenState extends State<Registration_screen> {
                         borderRadius: BorderRadius.all(Radius.circular(10)))),
               ),
             ),
-
-
 
             CheckboxListTile(
               title: const Text(
@@ -358,9 +376,6 @@ class _Registration_screenState extends State<Registration_screen> {
                         EasyLoading.dismiss();
 
                       }
-
-
-
 
                     }
 
